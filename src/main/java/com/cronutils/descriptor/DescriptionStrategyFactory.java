@@ -37,8 +37,8 @@ class DescriptionStrategyFactory {
     public static DescriptionStrategy daysOfWeekInstance(final ResourceBundle bundle, final FieldExpression expression, final FieldDefinition definition) {
         
     	final Function<Integer, String> nominal = integer -> {
-    		int diff = definition instanceof DayOfWeekFieldDefinition ? DayOfWeek.MONDAY.getValue() - ((DayOfWeekFieldDefinition) definition).getMondayDoWValue().getMondayDoWValue() : 0;
-        	return DayOfWeek.of(integer + diff < 1 ? 7 : integer + diff).getDisplayName(TextStyle.FULL, bundle.getLocale());
+    		int dayOfWeek = integer + (definition instanceof DayOfWeekFieldDefinition ? DayOfWeek.MONDAY.getValue() - ((DayOfWeekFieldDefinition) definition).getMondayDoWValue().getMondayDoWValue() : 0);
+        	return DayOfWeek.of(dayOfWeek < 1 ? 7 : dayOfWeek).getDisplayName(TextStyle.FULL, bundle.getLocale());
         };
         
         NominalDescriptionStrategy dow = new NominalDescriptionStrategy(bundle, nominal, expression);
